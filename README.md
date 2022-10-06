@@ -8,7 +8,7 @@ The source code of BIT
 
 # clip
 1.Original clip : https://github.com/openai/CLIP  
-2.To get the features we need, we modified the original clip. Modified code can be found in the lines [359-372] of model.py.  
+2.To get the features we need, we modified the original clip. Modified code can be found in the lines [359-372] of 'clip/model.py'.  
 
 # Code of BIT
 The source code of BIT will be released soon.
