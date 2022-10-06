@@ -38,7 +38,7 @@ def dp_txt(txt):
     return txt
 
 
-class MVSA_Single(Dataset):
+class TumEmo(Dataset):
     def __init__(self, txt_path, dp = False):
         fh = open(txt_path, 'r', encoding='utf-8')
         self.imgs = []
@@ -71,8 +71,8 @@ class MVSA_Single(Dataset):
 train_path = './TumEmo/processed_train.txt'  #
 test_path = './TumEmo/processed_test.txt'  #
 
-train_d = MVSA_Single(train_path)
-test_d = MVSA_Single(test_path)
+train_d = TumEmo(train_path)
+test_d = TumEmo(test_path)
 train_data = data.DataLoader(train_d, batch_size=batch_size, shuffle=True)
 test_data = data.DataLoader(test_d, batch_size=batch_size, shuffle=False)
 # 训练集
