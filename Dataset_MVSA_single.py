@@ -70,10 +70,10 @@ class MVSA_Single(Dataset):
 
 
 train_path = './MVSA_Single/train_0.9.txt'  #
-#test_path = './MVSA_Single/test_0.1.txt'  #
+test_path = './MVSA_Single/test_0.1.txt'  #
 valid_path = './MVSA_Single/valid_0.1.txt'
 train_d = MVSA_Single(train_path)
-test_d = MVSA_Single(valid_path)
+test_d = MVSA_Single(test_path)
 
 def get_dataset(batch_size = 16, drop_last=False):
     train_data = data.DataLoader(train_d, batch_size=batch_size, shuffle=True, drop_last=drop_last)
