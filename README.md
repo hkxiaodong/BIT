@@ -7,4 +7,4 @@ The source code of BIT
 3.MVSA-Single is (https://mcrlab.net/research/mvsa-sentiment-analysis-on-multi-view-social-data/).  
 
 # Code of BIT
-The code of BIT will be released soon.
+The source code of BIT will be released soon.
