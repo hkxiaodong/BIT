@@ -12,7 +12,7 @@ from opts import AverageMeter
 device = 'cuda' if torch.cuda.is_available() else 'cpu'  # cuda
 
 
-dataset = 'MVSA_S' # ''' TumEmo or MVSA_S or MVSA_M or MHF
+dataset = 'MVSA_S' # ''' TumEmo or MVSA_S
 
 if dataset == 'TumEmo':
     batch_size = 16
