@@ -4,7 +4,7 @@ from timm.models.layers import trunc_normal_
 from block import *
 
 
-class BMT(nn.Module):
+class BMT(nn.Module): # BIT
     def __init__(self, dim=512, num_heads=8, memory_slots=30, depth=3, cls_num=3, Fusion=True, lamd=0.5, index=0,
                  return_lamd=False, fusion_func='cat', cls_emb=True):
         super().__init__()
