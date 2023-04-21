@@ -204,7 +204,7 @@ class Memory_attention(nn.Module):
 
 
 
-class Adaptive_Memory_Gate_Fusion(nn.Module):
+class Adaptive_Memory_Gate_Fusion(nn.Module): # sub PIA
     def __init__(self, dim=512, num_heads=8):
         super().__init__()
         self.cross_attn = Cross_Attention_without_pro(dim=dim, num_heads=num_heads)
@@ -215,9 +215,6 @@ class Adaptive_Memory_Gate_Fusion(nn.Module):
         q_m = self.cross_attn(x1, x2)
         gate = torch.sigmoid(q_m + self.linear1(x1))
         out = gate * self.linear2(x1)
-        '''
-        可以输出gate 来查看是前向记忆重要还是后向记忆重要
-        '''
         return out
 
 class Cross_Memory_Block(nn.Module): # PIA
