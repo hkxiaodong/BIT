@@ -126,7 +126,7 @@ class Cross_Attention_with_pro(nn.Module):
         x = self.project(x)
         return x
 
-class MemoryInit(nn.Module):
+class MemoryInit(nn.Module): # prefix init
     def __init__(self, n_memory_cells, dim):
         super(MemoryInit, self).__init__()
         # init memory
@@ -150,32 +150,6 @@ class MemoryInit(nn.Module):
         init_memory = self.init_memory_fc(pooled_input_states)  # (N, M, D)
         return init_memory
 
-class Memory_Updater(nn.Module):
-    def __init__(self, dim=512,num_heads=8):
-        super().__init__()
-        # memory
-        self.update_momory_attn = Cross_Attention_without_pro(dim, num_heads=num_heads)
-
-        self.linear1 = nn.Linear(dim, dim)
-        self.linear2 = nn.Linear(dim, dim)
-
-        self.linear3 = nn.Linear(dim, dim)
-        self.linear4 = nn.Linear(dim, dim)
-
-        self.linear5 = nn.Linear(dim, dim)
-        self.linear6 = nn.Linear(dim, dim)
-
-    def forward(self, pre_memory, other_hidden_states):
-
-        queried_state = self.update_momory_attn(pre_memory, other_hidden_states)
-
-        r = torch.sigmoid(self.linear1(pre_memory) + self.linear2(queried_state))
-        z = torch.sigmoid(self.linear3(pre_memory) + self.linear4(queried_state))
-        n = torch.tanh(r * self.linear5(pre_memory) + self.linear6(queried_state))
-
-        updated_memory = (1 - z) * n + z * pre_memory
-
-        return updated_memory
 
 class Memory_attention(nn.Module):
     '''
@@ -246,9 +220,9 @@ class Adaptive_Memory_Gate_Fusion(nn.Module):
         '''
         return out
 
-class Cross_Memory_Block(nn.Module):
+class Cross_Memory_Block(nn.Module): # PIA
     '''
-    M.
+    PIA
     '''
     def __init__(self, dim=512, num_heads=8):
         super().__init__()
@@ -264,9 +238,9 @@ class Cross_Memory_Block(nn.Module):
 
 
 
-class Memory_augmented_Interactive_Block(nn.Module):
+class Memory_augmented_Interactive_Block(nn.Module): # HMPIA
     '''
-    MIB
+    HMPIA
     '''
     def __init__(self, dim=512, num_heads=8):
         super().__init__()
@@ -278,66 +252,8 @@ class Memory_augmented_Interactive_Block(nn.Module):
         text_out = self.text_block(x2, x1, mk_t, mv_t, perfix=perfix)
         return image_out, text_out
 
-class Bi_fusion(nn.Module):
-    def __init__(self, dim, down_dim, num_cls, lamd):
-        super().__init__()
-        self.f_dowm_linear = nn.Linear(dim*2, down_dim)
-        self.b_dowm_linear = nn.Linear(dim*2, down_dim)
 
-        self.linear_f = nn.Linear(2 * dim + down_dim, dim)
-        self.linear_b = nn.Linear(2 * dim + down_dim, dim)
-
-        self.linear_o = nn.Linear(dim, num_cls)
-        self.lamd = lamd
-
-    def forward(self, Fi, Ft, Bi, Bt):
-        cat_f = torch.cat([Fi, Ft], dim=-1)
-        Fo = torch.cat([cat_f, self.f_dowm_linear(cat_f)], dim=-1)
-        Fo = self.linear_f(Fo)
-
-        cat_b = torch.cat([Bi, Bt], dim=-1)
-        Bo = torch.cat([cat_b, self.f_dowm_linear(cat_b)], dim=-1)
-        Bo = self.linear_b(Bo)
-        if self.lamd == 'woga':
-            cat_o = Fo + Bo
-            o = self.linear_o(cat_o)
-            return o
-        else:
-            cat_o = self.lamd*Fo + (1-self.lamd)*Bo
-            o = self.linear_o(cat_o)
-            return o
-
-
-class Ada_Bi_fusion(nn.Module):
-    def __init__(self, dim, num_cls):
-        super().__init__()
-
-        self.linear = nn.Sequential(
-            nn.Linear(4 * dim, dim),
-            nn.Linear(dim, 1),
-            nn.Sigmoid()
-        )
-
-        self.linear_o = nn.Sequential(
-            nn.Linear(2*dim, dim),
-            nn.Linear(dim, num_cls)
-        )
-
-    def forward(self, Fi, Ft, Bi, Bt):
-        cat_f = torch.cat([Fi, Ft], dim=-1)
-
-        cat_b = torch.cat([Bi, Bt], dim=-1)
-
-        cat_all = torch.cat([cat_f, cat_b], dim=-1)
-
-        gate1 = self.linear(cat_all)
-        a = gate1*cat_f + (1-gate1)*cat_b
-
-        o = self.linear_o(a)
-
-        return o
-
-class Ada_Bi_fusion_v2(nn.Module):
+class Ada_Bi_fusion_v2(nn.Module): # TAGF
     def __init__(self, dim, down_dim, num_cls, lamd=False, fusion_func='cat'):
         super().__init__()
         self.f_dowm_linear = nn.Linear(dim*2, down_dim)
