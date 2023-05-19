@@ -1,5 +1,5 @@
 # BIT
-The source code of <<BIT: Improving Image-text Sentiment Analysis via Learning Bidirectional Image-text Interaction>> that is accepted by IJCNN 2023.
+The source code of <<BIT: Improving Image-text Sentiment Analysis via Learning Bidirectional Image-text Interaction>> that is accepted by IJCNN 2023 (Oral).
 
 # Datasets
 1.Processed TumEmo is (https://github.com/YangXiaocui1215/MGNNS).  
