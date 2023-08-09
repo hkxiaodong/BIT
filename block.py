@@ -251,7 +251,7 @@ class Memory_augmented_Interactive_Block(nn.Module): # HMPIA
 
 
 class Ada_Bi_fusion_v2(nn.Module): # TAGF
-    def __init__(self, dim, down_dim, num_cls, lamd=False, fusion_func='cat'):
+    def __init__(self, dim, down_dim, num_cls, fusion_func='cat'):
         super().__init__()
         self.f_dowm_linear = nn.Linear(dim*2, down_dim)
         self.b_dowm_linear = nn.Linear(dim*2, down_dim)
@@ -277,7 +277,7 @@ class Ada_Bi_fusion_v2(nn.Module): # TAGF
         self.linear_o = nn.Sequential(
             nn.Linear(dim, num_cls)
         )
-        self.return_lamd = lamd
+
 
     def forward(self, Fi, Ft, Bi, Bt):
         cat_f = torch.cat([Fi, Ft], dim=-1)
@@ -297,11 +297,7 @@ class Ada_Bi_fusion_v2(nn.Module): # TAGF
             gate1 = self.linear_1(Fo+Bo)
 
         o = self.linear_o(gate1*Fo + (1-gate1)*Bo)
-
-        if self.return_lamd:
-            return o, gate1
-        else:
-            return o
+        return o
 
 
 if __name__ == '__main__':
