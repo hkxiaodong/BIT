@@ -15,7 +15,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'  # cuda
 dataset = 'MVSA_S' # ''' TumEmo or MVSA_S
 
 if dataset == 'TumEmo':
-    batch_size = 16
+    batch_size = 16 # 32
     cls_num = 7
     epoch = 5  #
     index = -1 # TumEmo -1
@@ -44,9 +44,9 @@ elif clip_pth in ['ViT-L/14']:
 #    pad_size = 77
 model, _ = clip.load(clip_pth)
 clip_model = model.cuda()
-lamd = 'v2'
+lamd = False
 fusion = True
-depth = i
+depth = depth
 net = BMT(dim=dim, num_heads=8, memory_slots=memory, depth=depth,
           cls_num=cls_num, Fusion=fusion, lamd=lamd, index=index, cls_emb=cls_emb).cuda()
 
