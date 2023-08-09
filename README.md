@@ -1,8 +1,9 @@
 # BIT
 The source code of <<BIT: Improving Image-text Sentiment Analysis via Learning Bidirectional Image-text Interaction>> that is accepted by IJCNN 2023 (Oral).
 
+
 # Datasets
-1.Processed TumEmo is (https://github.com/YangXiaocui1215/MGNNS).  
+1.Processed TumEmo is (https://github.com/YangXiaocui1215/MGNNS).  In our work, we use processed TumEmo following this link.
 2.Original TumEmo is (https://github.com/YangXiaocui1215/MVAN).  
 3.MVSA-Single is (https://mcrlab.net/research/mvsa-sentiment-analysis-on-multi-view-social-data/).  
 
