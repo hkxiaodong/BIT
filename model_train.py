@@ -44,11 +44,10 @@ elif clip_pth in ['ViT-L/14']:
 #    pad_size = 77
 model, _ = clip.load(clip_pth)
 clip_model = model.cuda()
-lamd = False
 fusion = True
 depth = depth
 net = BIT(dim=dim, num_heads=8, memory_slots=memory, depth=depth,
-          cls_num=cls_num, Fusion=fusion, lamd=lamd, index=index, cls_emb=cls_emb).cuda()
+          cls_num=cls_num, Fusion=fusion, index=index, cls_emb=cls_emb).cuda()
 
 XE_loss = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr=0.0001)
