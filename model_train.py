@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from model import BMT # BMT=BIT
+from model import BMT as BIT # BMT=BIT
 from block import *
 from Dataset_MVSA_single import get_dataset as MVSA_S
 from Dataset_TumEmo import get_dataset as TumEmo
@@ -20,17 +20,17 @@ if dataset == 'TumEmo':
     epoch = 5  #
     index = -1 # TumEmo -1
     cls_emb = True
-    memory = 30
+    memory = 30 # prefix length
     depth = 5
     train_data, test_data = TumEmo(batch_size=batch_size)
 
 if dataset == 'MVSA_S':
     batch_size = 16
     cls_num = 3
-    epoch = 20  #
+    epoch = 20  
     index = 0
     depth = 3
-    memory = 30
+    memory = 30 # prefix length
     cls_emb = True
     train_data, test_data = MVSA_S(batch_size=batch_size)
 
@@ -47,7 +47,7 @@ clip_model = model.cuda()
 lamd = False
 fusion = True
 depth = depth
-net = BMT(dim=dim, num_heads=8, memory_slots=memory, depth=depth,
+net = BIT(dim=dim, num_heads=8, memory_slots=memory, depth=depth,
           cls_num=cls_num, Fusion=fusion, lamd=lamd, index=index, cls_emb=cls_emb).cuda()
 
 XE_loss = nn.CrossEntropyLoss()
