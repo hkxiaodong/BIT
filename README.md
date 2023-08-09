@@ -3,7 +3,7 @@ The source code of <<BIT: Improving Image-text Sentiment Analysis via Learning B
 
 
 # Datasets
-1.Processed TumEmo is (https://github.com/YangXiaocui1215/MGNNS).In our work, we use processed TumEmo following this link.  
+1.Processed TumEmo is (https://github.com/YangXiaocui1215/MGNNS). In our work, we use processed TumEmo following this link.  
 2.Original TumEmo is (https://github.com/YangXiaocui1215/MVAN).  
 3.MVSA-Single is (https://mcrlab.net/research/mvsa-sentiment-analysis-on-multi-view-social-data/).  
 
