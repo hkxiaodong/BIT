@@ -5,8 +5,7 @@ from block import *
 
 
 class BMT(nn.Module): # BIT
-    def __init__(self, dim=512, num_heads=8, memory_slots=30, depth=3, cls_num=3, Fusion=True, lamd=False, index=0,
-                 return_lamd=False, fusion_func='cat', cls_emb=True):
+    def __init__(self, dim=512, num_heads=8, memory_slots=30, depth=3, cls_num=3, Fusion=True, index=0, fusion_func='cat', cls_emb=True):
         super().__init__()
         self.memory_initers = nn.ModuleList([MemoryInit(memory_slots, dim)
             for _ in range(8)])
@@ -32,12 +31,9 @@ class BMT(nn.Module): # BIT
             self.cls_b_i = nn.Parameter(torch.zeros(1, 1, dim))  # cat
             self.cls_b_t = nn.Parameter(torch.zeros(1, 1, dim))  # cat
         self.Fusion = Fusion
-        self.return_lamd = return_lamd
         self.fusion_func = fusion_func
         if Fusion:
-            #self.head = Bi_fusion(dim=dim, down_dim=dim, num_cls=cls_num, lamd=lamd)
-            #self.head = Ada_Bi_fusion(dim=dim, down_dim=dim, num_cls=cls_num, lamd=lamd)
-            self.head = Ada_Bi_fusion_v2(dim=dim, down_dim=dim, num_cls=cls_num, lamd=return_lamd, fusion_func=self.fusion_func)
+            self.head = Ada_Bi_fusion_v2(dim=dim, down_dim=dim, num_cls=cls_num,  fusion_func=self.fusion_func)
 
         else:
             self.head = nn.Sequential(
@@ -126,9 +122,6 @@ class BMT(nn.Module): # BIT
         if self.Fusion:
             o = self.head(forward_image[:, 0, :], forward_text[:, 0, :],
                           backward_image[:, self.index, :], backward_text[:, self.index, :])
-            if self.return_lamd:
-                return o[0], o[1]
-            else:
                 return o
         else:  # -1 or 0 看看效果。
             o = torch.cat([forward_image[:, 0, :], forward_text[:, 0, :],
