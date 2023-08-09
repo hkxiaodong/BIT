@@ -10,7 +10,7 @@ class BMT(nn.Module): # BIT
         super().__init__()
         self.memory_initers = nn.ModuleList([MemoryInit(memory_slots, dim)
             for _ in range(8)])
-        ###########
+        ############  gaters are PIN.
         self.forward_gaters = nn.ModuleList([Adaptive_Memory_Gate_Fusion(dim, num_heads)
                                             for _ in range(4)]) # memory-gate
         self.forward_gaters_depth = nn.ModuleList([self.forward_gaters
@@ -20,7 +20,7 @@ class BMT(nn.Module): # BIT
                                              for _ in range(4)])  # memory-gat
         self.backward_gaters_depth = nn.ModuleList([self.backward_gaters
                                                     for _ in range(depth)])
-        ###########
+        ########### blocks are BIE
         self.forward_blocks = nn.ModuleList([Memory_augmented_Interactive_Block(dim, num_heads)
             for _ in range(depth)])
         self.backward_blocks = nn.ModuleList([Memory_augmented_Interactive_Block(dim, num_heads)
