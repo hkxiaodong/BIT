@@ -35,7 +35,7 @@ if dataset == 'MVSA_S':
     train_data, test_data = MVSA_S(batch_size=batch_size)
 
 
-# CLIP prereained model's path
+# CLIP pre-trained model's path
 clip_pth = 'ViT-B/16'
 if clip_pth in ['ViT-B/16', 'ViT-B/32']:
     dim = 512
@@ -154,14 +154,14 @@ def test_(epoch, total_epoch, train_acc):
             'epoch': epoch,
         }
 
-        if not os.path.isdir(f'D:/paper_3/{dataset}_memory={memory}_lamd={lamd}'):
-            os.mkdir(f'D:/paper_3/{dataset}_memory={memory}_lamd={lamd}')
+        if not os.path.isdir(f'D:/paper_3/{dataset}_memory={memory}'):
+            os.mkdir(f'D:/paper_3/{dataset}_memory={memory}')
 
-        torch.save(state, f'D:/paper_3/{dataset}_memory={memory}_lamd={lamd}/{acc}_{train_acc}_{epoch}_depth={depth}_memory={memory}_index={index}.pth')
+        torch.save(state, f'D:/paper_3/{dataset}_memory={memory}/{acc}_{train_acc}_{epoch}_depth={depth}_memory={memory}_index={index}.pth')
         prediction = np.array(prediction).flatten()
         truth = np.array(truth).flatten()
 
-        np.savez(f'D:/paper_3/{dataset}_memory={memory}_lamd={lamd}/{acc}_{train_acc}_{epoch}_depth={depth}_memory={memory}_index={index}.npz', pred=prediction,
+        np.savez(f'D:/paper_3/{dataset}_memory={memory}/{acc}_{train_acc}_{epoch}_depth={depth}_memory={memory}_index={index}.npz', pred=prediction,
                  labels=truth)
 
         best_acc = acc
