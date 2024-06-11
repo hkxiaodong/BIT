@@ -285,7 +285,7 @@ class Ada_Bi_fusion_v2(nn.Module): # TAGF
         Fo = self.linear_f(Fo)
 
         cat_b = torch.cat([Bi, Bt], dim=-1)
-        Bo = torch.cat([cat_b, self.f_dowm_linear(cat_b)], dim=-1)
+        Bo = torch.cat([cat_b, self.b_dowm_linear(cat_b)], dim=-1)
         Bo = self.linear_b(Bo)
 
 
